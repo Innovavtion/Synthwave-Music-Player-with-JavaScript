@@ -62,9 +62,13 @@ body {
 }
 
 .line_progress_track {
-    width: 70%;
+    width: 0%;
     height: 20px;
     background: #CE5BE2;
+}
+
+.line_track:hover {
+    cursor: pointer;
 }
 
 .button_progress_track {
@@ -118,6 +122,10 @@ body {
     margin-top: -5px;
     margin-right: -5px;
     background: #ffffff;
+}
+
+.play_button, .skip_next_buttton, .skip_previose_button {
+    cursor: pointer;
 }
 
 

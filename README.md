@@ -15,4 +15,4 @@
 1. Line Progress Song
 2. Line Volume Song
 
-Can be improved by changing to <input type="range">
+Can be improved by changing to `<input type="range">`

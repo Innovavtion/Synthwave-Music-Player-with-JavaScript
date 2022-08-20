@@ -9,7 +9,9 @@ const player = document.querySelector('.player'),
     lineProgressTrack = document.querySelector('.line_progress_track'),
     progressTrackButton = document.querySelector('.button_progress_track'),
     nameSong = document.querySelector('.name_music'),
-    coverImg = document.querySelector('.cover_img');
+    coverImg = document.querySelector('.cover_img'),
+    repeatSongImg = document.querySelector('.repeat_img');
+    
 
 //Name and Img Songs
 const songs = [
@@ -29,6 +31,7 @@ const songs = [
 
 //Basic start song
 let songId = 0;
+let repeatTrack = false;
 
 //Load Song
 function loadSong(song) {
@@ -57,6 +60,27 @@ function puaseSong() {
     //pause play music
     audio.pause();
 }
+
+//Обработчик события для повторения трека
+repeatSongImg.addEventListener('click', () => {
+    const repeatSong = repeatSongImg.classList.contains('repeat');
+
+    if (!repeatSong) {
+        repeatTrack = true;
+
+        repeatSongImg.src = `img/icons/RepeatOne.svg`;
+
+        repeatSongImg.classList.add('repeat');
+    } else {
+        repeatTrack = false;
+
+        repeatSongImg.src = `img/icons/Repeat.svg`;
+
+        repeatSongImg.classList.remove('repeat');
+    }
+
+    console.log(repeatTrack);
+})
 
 //Обработчик событий для кнопки проигрывания песни
 playButton.addEventListener('click', () => {
@@ -113,8 +137,11 @@ function progressSong(event) {
     //Обновляем длину линии тега lineProgressTrack
     lineProgressTrack.style.width = `${progressPercent}%`;
 
-    if (duration == currentTime) {
+    //Проверка на то что конец трека и повторять ли его
+    if (duration == currentTime && !repeatTrack) {
         nextSong();
+    } else if (duration == currentTime) {
+        playSong();
     }
 }
 

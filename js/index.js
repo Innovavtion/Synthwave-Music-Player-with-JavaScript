@@ -10,8 +10,11 @@ const player = document.querySelector('.player'),
     progressTrackButton = document.querySelector('.button_progress_track'),
     nameSong = document.querySelector('.name_music'),
     coverImg = document.querySelector('.cover_img'),
-    repeatSongImg = document.querySelector('.repeat_img');
-    
+    repeatSongImg = document.querySelector('.repeat_img'),
+    volumeLine = document.querySelector('.volume_line'),
+    volumeLineProcent = document.querySelector('.volume_line_procent'),
+    volumeImg = document.querySelector('.volumeImg')
+
 
 //Name and Img Songs
 const songs = [
@@ -31,6 +34,7 @@ const songs = [
 
 //Basic start song
 let songId = 0;
+let volumeTrack = 0.3;
 let repeatTrack = false;
 
 //Load Song
@@ -38,6 +42,7 @@ function loadSong(song) {
     nameSong.innerHTML = songs[song].name;
     audio.src = `audio/${songs[song].name}.mp3`;
     coverImg.src = `img/cover/${songs[song].img}.jpg`;
+    audio.volume = volumeTrack;
 }
 
 loadSong(songId);
@@ -78,8 +83,6 @@ repeatSongImg.addEventListener('click', () => {
 
         repeatSongImg.classList.remove('repeat');
     }
-
-    console.log(repeatTrack);
 })
 
 //Обработчик событий для кнопки проигрывания песни
@@ -162,3 +165,37 @@ function setProgressSong(event) {
 
 //Прослушивание события с помощью аргумента click и вызываем функцию setProgressSong
 lineTrack.addEventListener('click', setProgressSong);
+
+function setVolumeSong(event) {
+    const volumeWidth = volumeLine.clientWidth;
+
+    const volumeClickLine = event.offsetX;
+
+    volumeImg.src = `img/icons/VolumeUp.svg`;
+
+    volumeImg.classList.remove('mute');
+
+    const volume = audio.volume = (volumeClickLine / volumeWidth);
+
+    volumeLineProcent.style.width  = `${volume * 100}%`;
+}
+
+volumeLine.addEventListener('click', setVolumeSong);
+
+volumeImg.addEventListener('click', () => {
+    const volumeMute = volumeImg.classList.contains('mute');
+
+    if (!volumeMute) {
+        audio.volume = 0;
+
+        volumeImg.src = `img/icons/VolumeOff.svg`;
+
+        volumeImg.classList.add('mute');
+    } else {
+        audio.volume = volumeLineProcent.clientWidth / 100;
+
+        volumeImg.src = `img/icons/VolumeUp.svg`;
+
+        volumeImg.classList.remove('mute');
+    }
+})

@@ -109,7 +109,7 @@ body {
 }
 
 .volume_line_procent {
-    width: 70%;
+    width: 30%;
     height: 10px;
     background: #CE5BE2;
 }
@@ -124,11 +124,12 @@ body {
     background: #ffffff;
 }
 
-.play_button, .skip_next_buttton, .skip_previose_button {
-    cursor: pointer;
-}
-
-.repeat_buttton:hover {
+.play_button, 
+.skip_next_buttton, 
+.skip_previose_button,
+.repeat_buttton,
+.volume_button, 
+.volume_line {
     cursor: pointer;
 }
 

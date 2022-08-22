@@ -13,7 +13,7 @@
 ## Bags
 
 1. Line Progress Song
-2. Line Volume Song
-3. Next song reset volume
+2. ~~Line Volume Song~~
+3. ~~Next song reset volume~~
 
-Can be improved by changing to `<input type="range">`
+Can be improved by changing to `<input type="range">` for volume

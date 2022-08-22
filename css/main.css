@@ -100,28 +100,40 @@ body {
     justify-content: center;
 }
 
+.line_track,
 .volume_line {
-    width: 100px;
-    height: 10px;
-    margin: 21px auto;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
     background: #292651;
+}
+
+.volume_line {
+    height: 10px;
+    width: 100px;
+    margin: 21px auto;
     margin-left: 10px;
 }
 
-.volume_line_procent {
-    width: 30%;
-    height: 10px;
-    background: #CE5BE2;
+/* Chrome and Opera */
+.volume_line::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 20px;
+    width: 10px;
+    background: #ffffff;
+    cursor: pointer;
 }
 
-.volume_button_procent {
-    width: 10px;
+/* Firefox */
+.volume_line::-moz-range-thumb {
+    -moz-appearance: none;
+    border-radius: 0;
+    border: none;
     height: 20px;
-    float: right;
-    position: relative;
-    margin-top: -5px;
-    margin-right: -5px;
+    width: 10px;
     background: #ffffff;
+    cursor: pointer;
 }
 
 .play_button, 

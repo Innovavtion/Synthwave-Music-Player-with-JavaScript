@@ -12,8 +12,7 @@ const player = document.querySelector('.player'),
     coverImg = document.querySelector('.cover_img'),
     repeatSongImg = document.querySelector('.repeat_img'),
     volumeLine = document.querySelector('.volume_line'),
-    volumeLineProcent = document.querySelector('.volume_line_procent'),
-    volumeImg = document.querySelector('.volumeImg')
+    volumeImg = document.querySelector('.volumeImg');
 
 
 //Name and Img Songs
@@ -34,15 +33,17 @@ const songs = [
 
 //Basic start song
 let songId = 0;
-let volumeTrack = 0.3;
 let repeatTrack = false;
+
+//Basic volume and progress line
+audio.volume = volumeSong();
+volumeLine.style.background = updateProgressLine(volumeLine);
 
 //Load Song
 function loadSong(song) {
     nameSong.innerHTML = songs[song].name;
     audio.src = `audio/${songs[song].name}.mp3`;
     coverImg.src = `img/cover/${songs[song].img}.jpg`;
-    audio.volume = volumeTrack;
 }
 
 loadSong(songId);
@@ -166,22 +167,31 @@ function setProgressSong(event) {
 //Прослушивание события с помощью аргумента click и вызываем функцию setProgressSong
 lineTrack.addEventListener('click', setProgressSong);
 
-function setVolumeSong(event) {
-    const volumeWidth = volumeLine.clientWidth;
-
-    const volumeClickLine = event.offsetX;
-
-    volumeImg.src = `img/icons/VolumeUp.svg`;
-
-    volumeImg.classList.remove('mute');
-
-    const volume = audio.volume = (volumeClickLine / volumeWidth);
-
-    volumeLineProcent.style.width  = `${volume * 100}%`;
+//Function update volume songs
+function volumeSong() {
+    return audio.volume = volumeLine.value / 100;
 }
 
-volumeLine.addEventListener('click', setVolumeSong);
+//Function update progress line input range
+function updateProgressLine(element) {
+    element.style.background = 
+    `linear-gradient(
+        to right, 
+        #CE5BE2 ${(element.value-element.min)/(element.max-element.min)*100}%, 
+        #292651 ${(element.value-element.min)/(element.max-element.min)*100}%
+    )`;
+}
 
+//Listening event volumeLine for update volumeImg and volumeLine
+volumeLine.oninput = function() {
+    updateProgressLine(this);
+    volumeSong();
+
+    volumeImg.src = `img/icons/VolumeUp.svg`;
+    volumeImg.classList.remove('mute');
+}
+
+//Mute song
 volumeImg.addEventListener('click', () => {
     const volumeMute = volumeImg.classList.contains('mute');
 
@@ -192,7 +202,7 @@ volumeImg.addEventListener('click', () => {
 
         volumeImg.classList.add('mute');
     } else {
-        audio.volume = volumeLineProcent.clientWidth / 100;
+        audio.volume = volumeLine.value / 100;
 
         volumeImg.src = `img/icons/VolumeUp.svg`;
 
